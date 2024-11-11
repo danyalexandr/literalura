@@ -2,8 +2,10 @@ package com.alurachallenge.literalura.menu;
 
 import com.alurachallenge.literalura.model.DatosAutor;
 import com.alurachallenge.literalura.model.DatosLibro;
+import com.alurachallenge.literalura.model.DatosLista;
 import com.alurachallenge.literalura.service.ConsumoAPI;
 import com.alurachallenge.literalura.service.ConvierteDatos;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -34,11 +36,21 @@ public class MenuPrincipal {
             System.out.println(menu);
             opcion = teclado.nextInt();
             teclado.nextLine();
-
+            
             switch (opcion) {
                 case 1:
+                    //busca el libro por titulo
                     System.out.println("Ingrese el titulo del libro a buscar");
                     var titulo = teclado.nextLine();
+                    var URL = "https://gutendex.com/books/?search=";
+                    var json = consumoApi.obtenerDatos(URL + titulo.replace(" ", "%20"));
+                    System.out.println("************************************************************");
+                    System.out.println("este es el json: " + json);
+                    System.out.println("************************************************************");
+                    var datos = conversor.obtenerDatos(json, DatosLista.class);
+                    System.out.println("************************************************************");
+                    System.out.println("este es el titulo: " + datos.resultado().get(0));
+                    System.out.println("************************************************************");
                     break;
                 case 2:
                    // metodo de libros registrados en db
